@@ -23,145 +23,145 @@ void FProceduralMapGenerationPluginEdModeToolkit::Init(const TSharedPtr<IToolkit
 {
 	//	Establish the Border/Window for the Tool	
 	SAssignNew(ToolkitWidget, SBorder)
-		.Padding(2)
-		.IsEnabled(true)
+	.Padding(2)
+	.IsEnabled(true)
+	[
+		//	Window Vertical Box
+		SNew(SVerticalBox)
+
+		+ SVerticalBox::Slot()
+		.AutoHeight()
 		[
-			//	Window Vertical Box
-			SNew(SVerticalBox)
-
-			+ SVerticalBox::Slot()
-			.AutoHeight()
+			//	Expandable area for the Window Detail header
+			SNew(SExpandableArea)
+			.BodyBorderBackgroundColor(FSlateColor(FLinearColor(0.5, 0.5, 0.5)))
+			.BorderBackgroundColor(FSlateColor(FLinearColor(0.3, 0.3, 0.3)))
+			.InitiallyCollapsed(false)
+			.Padding(8.0f)
+			.HeaderContent()
 			[
-				//	Expandable area for the Window Detail header
-				SNew(SExpandableArea)
-				.BodyBorderBackgroundColor(FSlateColor(FLinearColor(0.5, 0.5, 0.5)))
-				.BorderBackgroundColor(FSlateColor(FLinearColor(0.3, 0.3, 0.3)))
-				.InitiallyCollapsed(false)
-				.Padding(8.0f)
-				.HeaderContent()
+				//	Header for the Landscape Generator category block
+				SNew(STextBlock)
+				.Text(NSLOCTEXT("ProceduralToolWindow", "LandscapeGeneratorCategoryHeader", "Landscape Generation Tool"))
+			]
+			.BodyContent()
+			[
+				//	Wrapper for the Text Block
+				SNew(SVerticalBox)
+				+ SVerticalBox::Slot()
+				.HAlign(HAlign_Center)
+				.AutoHeight()
+				.Padding(10)
 				[
-					//	Header for the Landscape Generator category block
 					SNew(STextBlock)
-					.Text(NSLOCTEXT("ProceduralToolWindow", "LandscapeGeneratorCategoryHeader", "Landscape Generation Tool"))
-				]
-				.BodyContent()
-				[
-					//	Wrapper for the Text Block
-					SNew(SVerticalBox)
-					+ SVerticalBox::Slot()
-					.HAlign(HAlign_Center)
-					.AutoHeight()
-					.Padding(10)
-					[
-						SNew(STextBlock)
-						.AutoWrapText(true)
-						.Text(LOCTEXT("HelperLabel", "This tool will generate a terrain mesh based on a heightmap that is passed in via the Heightmap field."))
-					]
+					.AutoWrapText(true)
+					.Text(LOCTEXT("HelperLabel", "This tool will generate a terrain mesh based on a heightmap that is passed in via the Heightmap field."))
 				]
 			]
+		]
 
-			//	Heightmap Category Block
-			+ SVerticalBox::Slot()
-			.AutoHeight()
+		//	Heightmap Category Block
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		[
+			//	Category Block Definition
+			SNew(SExpandableArea)
+			.BodyBorderBackgroundColor(FSlateColor(FLinearColor(0.5, 0.5, 0.5)))
+			.BorderBackgroundColor(FSlateColor(FLinearColor(0.3, 0.3, 0.3)))
+			.InitiallyCollapsed(false)
+			.Padding(8.0f)
+			.HeaderContent()
 			[
-				//	Category Block Definition
-				SNew(SExpandableArea)
-					.BodyBorderBackgroundColor(FSlateColor(FLinearColor(0.5, 0.5, 0.5)))
-					.BorderBackgroundColor(FSlateColor(FLinearColor(0.3, 0.3, 0.3)))
-					.InitiallyCollapsed(false)
-					.Padding(8.0f)
-					.HeaderContent()
-					[
-						//	Header for the Heightmap category block
-						SNew(STextBlock)
-						.Text(NSLOCTEXT("ProceduralToolWindow", "HeightMapCategoryHeader", "Heightmap Information"))
-					]
-					.BodyContent()
-					[
-						//	Splitter for resizing horizontally
-						SNew(SSplitter)
+				//	Header for the Heightmap category block
+				SNew(STextBlock)
+				.Text(NSLOCTEXT("ProceduralToolWindow", "HeightMapCategoryHeader", "Heightmap Information"))
+			]
+			.BodyContent()
+			[
+				//	Splitter for resizing horizontally
+				SNew(SSplitter)
 
-						//	Heightmap input line
-						+ SSplitter::Slot()
-						[
-							//	Heightmap File descriptor
-							SNew(SHorizontalBox)
-							+ SHorizontalBox::Slot()
-							[
-								SNew(STextBlock)
-								.Text(NSLOCTEXT("ProceduralToolWindow", "HeightmapTag", "Heightmap file"))
-							]
-						]
+				//	Heightmap input line
+				+ SSplitter::Slot()
+				[
+					//	Heightmap File descriptor
+					SNew(SHorizontalBox)
+					+ SHorizontalBox::Slot()
+					[
+						SNew(STextBlock)
+						.Text(NSLOCTEXT("ProceduralToolWindow", "HeightmapTag", "Heightmap file"))
+					]
+				]
 						
-						//	Heightmap Text field
-						+ SSplitter::Slot()
-						[
-							SNew(SHorizontalBox)
-							+ SHorizontalBox::Slot()
-							[
-								SNew(SEditableTextBox)
-								.OnTextCommitted(FOnTextCommitted::CreateSP(this, &FProceduralMapGenerationPluginEdModeToolkit::SetHeightMapFile))
-							]
-						]
-					]
-			]
-
-			//	Bitmap Category Block
-			+ SVerticalBox::Slot()
-			.AutoHeight()
-			[
-				//	Category Block Definition
-				SNew(SExpandableArea)
-				.BodyBorderBackgroundColor(FSlateColor(FLinearColor(0.5, 0.5, 0.5)))
-				.BorderBackgroundColor(FSlateColor(FLinearColor(0.3, 0.3, 0.3)))
-				.InitiallyCollapsed(false)
-				.Padding(8.0f)
-				.HeaderContent()
+				//	Heightmap Text field
+				+ SSplitter::Slot()
 				[
-					//	Header for the Bitmap category block
-					SNew(STextBlock)
-					.Text(NSLOCTEXT("ProceduralToolWindow", "BitMapCategoryHeader", "Bitmap Information"))
-				]
-				.BodyContent()
-				[
-					//	Splitter for resizing horizontally
-					SNew(SSplitter)
-
-					//	Bitmap input line
-					+ SSplitter::Slot()
+					SNew(SHorizontalBox)
+					+ SHorizontalBox::Slot()
 					[
-						//	Bitmap File descriptor
-						SNew(SHorizontalBox)
-						+ SHorizontalBox::Slot()
-						[
-							SNew(STextBlock)
-							.Text(NSLOCTEXT("ProceduralToolWindow", "BitmapTag", "Bitmap file"))
-						]
+						SNew(SEditableTextBox)
+						.OnTextCommitted(FOnTextCommitted::CreateSP(this, &FProceduralMapGenerationPluginEdModeToolkit::SetHeightMapFile))
 					]
+				]
+			]
+		]
+
+		//	Bitmap Category Block
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		[
+			//	Category Block Definition
+			SNew(SExpandableArea)
+			.BodyBorderBackgroundColor(FSlateColor(FLinearColor(0.5, 0.5, 0.5)))
+			.BorderBackgroundColor(FSlateColor(FLinearColor(0.3, 0.3, 0.3)))
+			.InitiallyCollapsed(false)
+			.Padding(8.0f)
+			.HeaderContent()
+			[
+				//	Header for the Bitmap category block
+				SNew(STextBlock)
+				.Text(NSLOCTEXT("ProceduralToolWindow", "BitMapCategoryHeader", "Bitmap Information"))
+			]
+			.BodyContent()
+			[
+				//	Splitter for resizing horizontally
+				SNew(SSplitter)
+
+				//	Bitmap input line
+				+ SSplitter::Slot()
+				[
+					//	Bitmap File descriptor
+					SNew(SHorizontalBox)
+					+ SHorizontalBox::Slot()
+					[
+						SNew(STextBlock)
+						.Text(NSLOCTEXT("ProceduralToolWindow", "BitmapTag", "Bitmap file"))
+					]
+				]
 
 					//	Bitmap Text field
-					+ SSplitter::Slot()
+				+ SSplitter::Slot()
+				[
+					SNew(SHorizontalBox)
+					+ SHorizontalBox::Slot()
 					[
-						SNew(SHorizontalBox)
-						+ SHorizontalBox::Slot()
-						[
-							SNew(SEditableTextBox)
-							.OnTextCommitted(FOnTextCommitted::CreateSP(this, &FProceduralMapGenerationPluginEdModeToolkit::SetBitMapFile))
-						]
+						SNew(SEditableTextBox)
+						.OnTextCommitted(FOnTextCommitted::CreateSP(this, &FProceduralMapGenerationPluginEdModeToolkit::SetBitMapFile))
 					]
 				]
 			]
+		]
 
-			//	Generation Button
-			+ SVerticalBox::Slot()
-			.HAlign(HAlign_Right)
-			.AutoHeight()
-			[
-				SNew(SButton)
-				.OnClicked(this, &FProceduralMapGenerationPluginEdModeToolkit::OnButtonClick)
-				.Text(LOCTEXT("GenerateButtonLabel", "Generate Terrain"))
-			]
-		];
+		//	Generation Button
+		+ SVerticalBox::Slot()
+		.HAlign(HAlign_Right)
+		.AutoHeight()
+		[
+			SNew(SButton)
+			.OnClicked(this, &FProceduralMapGenerationPluginEdModeToolkit::OnButtonClick)
+			.Text(LOCTEXT("GenerateButtonLabel", "Generate Terrain"))
+		]
+	];
 		
 	FModeToolkit::Init(InitToolkitHost);
 }
