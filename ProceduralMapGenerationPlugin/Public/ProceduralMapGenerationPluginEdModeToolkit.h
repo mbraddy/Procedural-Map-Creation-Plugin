@@ -26,6 +26,7 @@ private:
 	void SetHeightMapFile(const FText&, ETextCommit::Type TextType);
 	void SetBitMapFile(const FText&, ETextCommit::Type TextType);
 
+
 	//	TODO :: Need to attach this to an enum later for different resolutions
 	size_t m_ResolutionSize = 1024;	
 

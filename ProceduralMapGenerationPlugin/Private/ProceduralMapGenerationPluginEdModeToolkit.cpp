@@ -11,6 +11,7 @@
 #include "Misc/FileHelper.h"
 //	#include "ProceduralMeshComponent.h"
 //	#include "KismetProceduralMeshLibrary.h"
+#include "ATerrainActor.h"
 #include "EditorModeManager.h"
 
 #define LOCTEXT_NAMESPACE "FProceduralMapGenerationPluginEdModeToolkit"
@@ -275,7 +276,7 @@ void FProceduralMapGenerationPluginEdModeToolkit::GenerateTerrain()
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString("End of Vertex, Triangles, and UV population"));
 			//	Draw the terrain based on the verts
 
-
+			//GenerateTangentsNormalsAndMesh(Vertices, UVs, Triangles);
 		}
 	}
 	else
