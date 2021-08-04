@@ -125,29 +125,67 @@ void FProceduralMapGenerationPluginEdModeToolkit::Init(const TSharedPtr<IToolkit
 			]
 			.BodyContent()
 			[
-				//	Splitter for resizing horizontally
-				SNew(SSplitter)
+				//	Container for Bitmap info
+				SNew(SVerticalBox)
 
-				//	Bitmap input line
-				+ SSplitter::Slot()
+				+ SVerticalBox::Slot()
+				.AutoHeight()
 				[
-					//	Bitmap File descriptor
-					SNew(SHorizontalBox)
-					+ SHorizontalBox::Slot()
+					//	Splitter for resizing horizontally
+					SNew(SSplitter)
+
+					//	Bitmap input line
+					+ SSplitter::Slot()
 					[
-						SNew(STextBlock)
-						.Text(NSLOCTEXT("ProceduralToolWindow", "BitmapTag", "Bitmap file"))
+						//	Bitmap File descriptor
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot()
+						[
+							SNew(STextBlock)
+							.Text(NSLOCTEXT("ProceduralToolWindow", "BitmapTag", "Bitmap file"))
+						]
 					]
-				]
 
 					//	Bitmap Text field
-				+ SSplitter::Slot()
-				[
-					SNew(SHorizontalBox)
-					+ SHorizontalBox::Slot()
+					+ SSplitter::Slot()
 					[
-						SNew(SEditableTextBox)
-						.OnTextCommitted(FOnTextCommitted::CreateSP(this, &FProceduralMapGenerationPluginEdModeToolkit::SetBitMapFile))
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot()
+						[
+							SNew(SEditableTextBox)
+							.OnTextCommitted(FOnTextCommitted::CreateSP(this, &FProceduralMapGenerationPluginEdModeToolkit::SetBitMapFile))
+						]
+					]
+				]
+				
+				+ SVerticalBox::Slot()
+				.AutoHeight()
+				[
+					SNew(SBorder)
+					[
+						SNew(SSplitter)
+						+ SSplitter::Slot()
+						[
+							SNew(SHorizontalBox)
+							+ SHorizontalBox::Slot()
+							[
+								SNew(STextBlock)
+								.Text(NSLOCTEXT("ProceduralToolWindow", "BitmapDragTag", "Colored Bit Map"))
+							]
+						]
+
+						+ SSplitter::Slot()
+						[
+							SNew(SBox)
+							[
+								SNew(SHorizontalBox)
+								//+ SHorizontalBox::Slot()
+								//[
+								//	
+								//	//SNew()
+								//]
+							]
+						]
 					]
 				]
 			]
